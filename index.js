@@ -68,7 +68,11 @@ function countClassesByInstructor(collection, instructor) {
  * @param {Object} collection - an array of member objects
  * @return {number} The array of member objects with only active members
  */
-function removeInactiveMembers(collection) {}
+function removeInactiveMembers(collection) {
+  return _.filter(collection, (obj) => {
+    return obj["currentMember"] === true
+  })
+}
 
 /**
  * Get a list of unique class titles and their price
