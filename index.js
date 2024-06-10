@@ -59,7 +59,9 @@ function omitAgeFromMembers(collection) {
  * @param {String} instructorName - The name of the instructor
  * @return {number} The sum of the numbers in an array
  */
-function countClassesByInstructor(collection, instructor) {}
+function countClassesByInstructor(collection, instructor) {
+  return _.filter(collection, {"instructor": instructor}).length > 0 ? _.filter(collection, {"instructor": instructor}).length : "There is no instructor by that name."
+}
 
 /**
  * Remove inactive members from the members array
