@@ -49,7 +49,9 @@ function groupClassByInstructor(collection) {
  * @param {Object} collection - an array of member objects
  * @return {number} The array of member objects, each one without the age field
  */
-function omitAgeFromMembers(collection) {}
+function omitAgeFromMembers(collection) {
+  return collection.map(member => _.omit(member,"age"))
+}
 
 /**
  * Return the count of the number of classes a particular instructor teaches
