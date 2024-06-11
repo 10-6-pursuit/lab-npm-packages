@@ -28,6 +28,11 @@ function sumNumbers(array) {
   }))
 }
 
+// function sumNumbers(array) {
+//   return _.sum(_.compact(array)
+// }
+
+
 /**
  * Convert a two-dimensional array of new member data (each inner array having two values: the first being the key, the second being the value) into an object
  * @param {Array[]} member -
@@ -38,6 +43,10 @@ function newMemberArrayToObject(member) {
     let values = member.map(each => each[1])
     return _.zipObject(keys, values)
 }
+
+// function newMemberArrayToObject(member) {
+//   return _.fromPairs(member)
+// }
 
 /**
  * Return an array of objects that grouped by instructors from the classes array of objects
@@ -56,6 +65,15 @@ function groupClassByInstructor(collection) {
 function omitAgeFromMembers(collection) {
   return collection.map(member => _.omit(member,"age"))
 }
+
+// function omitAgeFromMembers(collection) {
+//   function removeAge(member) {
+//     return _.omit(member, ["age"]);
+//   }
+
+//   return _.map(collection, removeAge);
+// }
+
 
 /**
  * Return the count of the number of classes a particular instructor teaches
@@ -93,7 +111,9 @@ function getUniqueClasses(collection) {
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that are organized by title then by level. The array should only have the title, instructor, and level fields
  */
-function orderClassesByTitleAndLevel(collection) {}
+function orderClassesByTitleAndLevel(collection) {
+    return _.chain(collection).orderBy(["title", "level"], ["asc", "desc"]).map((i) => ({title: i.title, instructor: i.instructor, level: i.level})).value();
+}
 
 module.exports = {
   numberOfKeys,
