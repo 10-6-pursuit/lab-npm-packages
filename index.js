@@ -57,7 +57,10 @@ function omitAgeFromMembers(collection) {
  * @return {number} The sum of the numbers in an array
  */
 function countClassesByInstructor(collection, instructor) {
-  return _.filter(collection, {"instructor": instructor}).length > 0 ? _.filter(collection, {"instructor": instructor}).length : "There is no instructor by that name."
+
+  const numOfClasses = _.filter(collection, {"instructor": instructor}).length;
+
+  return numOfClasses > 0 ? numOfClasses : "There is no instructor by that name."
 }
 
 /**
@@ -65,14 +68,19 @@ function countClassesByInstructor(collection, instructor) {
  * @param {Object} collection - an array of member objects
  * @return {number} The array of member objects with only active members
  */
-function removeInactiveMembers(collection) {}
+function removeInactiveMembers(collection) {
+  return _.filter(collection, ["currentMember", true]);
+  // return _.filter(collection, {"currentMember": true});
+}
 
 /**
  * Get a list of unique class titles and their price
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that have a unique title and a price
  */
-function getUniqueClasses(collection) {}
+function getUniqueClasses(collection) {
+  return _.uniqBy(collection, "title").map((obj) => _.pick(obj, ["title", "priceInCents"]));
+}
 
 /**
  * Get a list of classes organized by title, then by level.
@@ -80,7 +88,9 @@ function getUniqueClasses(collection) {}
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that are organized by title then by level. The array should only have the title, instructor, and level fields
  */
-function orderClassesByTitleAndLevel(collection) {}
+function orderClassesByTitleAndLevel(collection) {
+  return _.chain(collection).orderBy(["title", "level"], ["asc", "desc"]).map((i) => ({title: i.title, instructor: i.instructor, level: i.level})).value();
+}
 
 module.exports = {
   numberOfKeys,
