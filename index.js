@@ -13,6 +13,10 @@ function numberOfKeys(obj) {
   return _.keysIn(obj).length
 }
 
+// function numberOfKeys(obj) { 
+//   return _.size(obj)
+// }
+
 /**
  * Remove the falsy values in a numbers array and return the sum
  * @param {numbers[]} array - An array of numbers that can also contain some falsy values
@@ -79,7 +83,9 @@ function removeInactiveMembers(collection) {
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that have a unique title and a price
  */
-function getUniqueClasses(collection) {}
+function getUniqueClasses(collection) {
+  return _.uniqBy(collection, "title").map(obj => _.pick(obj, ["title", "priceInCents"]))
+}
 
 /**
  * Get a list of classes organized by title, then by level.
