@@ -16,10 +16,7 @@ const numberOfKeys = (obj) => _.keys(obj).length;
  * @param {numbers[]} array - An array of numbers that can also contain some falsy values
  * @return {number} The sum of the numbers in an array
  */
-function sumNumbers(array) {
-  const cleanedArray = _.compact(array);
-  return _.sum(cleanedArray);
-}
+const sumNumbers = (array) => _.sum(_.compact(array));
 
 /**
  * Convert a two-dimensional array of new member data (each inner array having two values: the first being the key, the second being the value) into an object
@@ -33,14 +30,16 @@ const newMemberArrayToObject = (member) => _.fromPairs(member);
  * @param {Object[]} collection - an array of yoga class objects
  * @return {Object[]} - the reshaped collection where the classes are grouped by instructor name
  */
-const groupClassByInstructor = (collection) => _.groupBy(collection, "instructor");
+const groupClassByInstructor = (collection) =>
+  _.groupBy(collection, "instructor");
 
 /**
  * Remove the age key from the members array of object
  * @param {Object} collection - an array of member objects
  * @return {number} The array of member objects, each one without the age field
  */
-const omitAgeFromMembers = (collection) => _.map(collection, (obj) => _.omit(obj, "age"));
+const omitAgeFromMembers = (collection) =>
+  _.map(collection, (obj) => _.omit(obj, "age"));
 
 /**
  * Return the count of the number of classes a particular instructor teaches
@@ -49,13 +48,8 @@ const omitAgeFromMembers = (collection) => _.map(collection, (obj) => _.omit(obj
  * @return {number} The sum of the numbers in an array
  */
 function countClassesByInstructor(collection, instructorName) {
-  const classesTaughtByInstructor = _.filter(collection, {
-    instructor: instructorName,
-  });
-  if (classesTaughtByInstructor.length === 0) {
-    return "There is no instructor by that name.";
-  }
-  return classesTaughtByInstructor.length;
+  const result = _.filter(collection, { instructor: instructorName });
+  return result.length ? result.length : "There is no instructor by that name.";
 }
 
 /**
@@ -63,19 +57,18 @@ function countClassesByInstructor(collection, instructorName) {
  * @param {Object} collection - an array of member objects
  * @return {number} The array of member objects with only active members
  */
-const removeInactiveMembers = (collection) => collection.filter((member) => member.currentMember === true);
+const removeInactiveMembers = (collection) =>
+  _.filter(collection, { currentMember: true });
 
 /**
  * Get a list of unique class titles and their price
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that have a unique title and a price
  */
-function getUniqueClasses(collection) {
-  const uniqueClasses = _.uniqBy(collection, "title");
-  return _.map(uniqueClasses, (classObj) =>
+const getUniqueClasses = (collection) =>
+  _.map(_.uniqBy(collection, "title"), (classObj) =>
     _.pick(classObj, ["title", "priceInCents"])
   );
-}
 
 /**
  * Get a list of classes organized by title, then by level.
@@ -83,11 +76,10 @@ function getUniqueClasses(collection) {
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that are organized by title then by level. The array should only have the title, instructor, and level fields
  */
-function orderClassesByTitleAndLevel(collection) {
-  return _.orderBy(collection, ["title", "level"], ["asc", "desc"]).map(
+const orderClassesByTitleAndLevel = (collection) =>
+  _.orderBy(collection, ["title", "level"], ["asc", "desc"]).map(
     ({ title, instructor, level }) => ({ title, instructor, level })
   );
-}
 
 module.exports = {
   numberOfKeys,
