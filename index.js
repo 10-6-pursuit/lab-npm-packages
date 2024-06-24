@@ -49,7 +49,9 @@ function groupClassByInstructor(collection) {
  * @param {Object} collection - an array of member objects
  * @return {number} The array of member objects, each one without the age field
  */
-function omitAgeFromMembers(collection) {}
+function omitAgeFromMembers(collection) {
+  return collection.map(member => _.omit(member, "age"))
+}
 
 /**
  * Return the count of the number of classes a particular instructor teaches
@@ -57,21 +59,28 @@ function omitAgeFromMembers(collection) {}
  * @param {String} instructorName - The name of the instructor
  * @return {number} The sum of the numbers in an array
  */
-function countClassesByInstructor(collection, instructor) {}
+function countClassesByInstructor(collection, instructor) {
+  return _.filter(collection, {"instructor": instructor}).length > 0 ? _.filter(collection, {"instructor": instructor}).length : "There is no instructor by that name."}
 
 /**
  * Remove inactive members from the members array
  * @param {Object} collection - an array of member objects
  * @return {number} The array of member objects with only active members
  */
-function removeInactiveMembers(collection) {}
+function removeInactiveMembers(collection) {
+  return _.filter(collection, (obj) => {
+    return obj["currentMember"] === true
+  })
+}
 
 /**
  * Get a list of unique class titles and their price
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that have a unique title and a price
  */
-function getUniqueClasses(collection) {}
+function getUniqueClasses(collection) {
+  return _.uniqBy(collection, "title").map(obj => _.pick(obj, ["title", "priceInCents"]))
+}
 
 /**
  * Get a list of classes organized by title, then by level.
@@ -79,7 +88,9 @@ function getUniqueClasses(collection) {}
  * @param {Object} collection - an array of yoga class objects
  * @return {number} An array of objects that are organized by title then by level. The array should only have the title, instructor, and level fields
  */
-function orderClassesByTitleAndLevel(collection) {}
+function orderClassesByTitleAndLevel(collection) {
+  return _.chain(collection).orderBy(["title", "level"], ["asc", "desc"]).map((i) => ({title: i.title, instructor: i.instructor, level: i.level})).value();
+}
 
 module.exports = {
   numberOfKeys,
@@ -180,6 +191,14 @@ console.log(fred); // { user: 'fred', age: 40, active: false }
 ```
 
 Lodash provides many more functions to handle different tasks, and its comprehensive documentation makes it easy to find the right method for your needs. By incorporating Lodash into your projects, you can streamline your code and improve readability and maintainability.
+
+
+
+
+
+
+
+
 
 
 */
