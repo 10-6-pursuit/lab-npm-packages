@@ -17,7 +17,7 @@ const {
   removeInactiveMembers,
   getUniqueClasses,
   orderClassesByTitleAndLevel,
-} = require("../index.js");
+   } = require("../index.js");
 
 describe("numberOfKeys()", () => {
   test("it returns the number of keys in an object", () => {
